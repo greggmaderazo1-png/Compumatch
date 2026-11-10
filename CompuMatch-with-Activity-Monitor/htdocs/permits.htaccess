@@ -1,0 +1,17 @@
+# Business permits are private. Block ALL direct browser access —
+# they can only be viewed through view_permit.php (System Admin only).
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
+
+# Belt-and-braces: never execute anything uploaded here as code.
+<FilesMatch "\.(php|phtml|php\d|phar|pl|py|cgi|sh)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+Options -Indexes -ExecCGI
